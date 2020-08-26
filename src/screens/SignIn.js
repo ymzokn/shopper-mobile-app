@@ -1,17 +1,14 @@
 import React, { useState, useContext } from "react";
-import { Text, View, StyleSheet, TextInput as Input, Button, Image, TouchableOpacity } from "react-native";
-// import { Text, Button, Image, Overlay, Input } from "react-native-elements";
-import { Overlay } from "react-native-elements";
+import { View, Text, StyleSheet, Image, Button, TouchableOpacity, TextInput as Input } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Context as AuthContext } from "../context/AuthContext"
 import * as RootNavigation from "../../RootNavigation"
+import { Context as AuthContext } from "../context/AuthContext"
+import { Overlay } from "react-native-elements";
 
-const SignUp = () => {
-    const { register, clearErrorMessage, state: { errorMessage } } = useContext(AuthContext)
+const SignIn = () => {
+    const { login, clearErrorMessage, state: { errorMessage } } = useContext(AuthContext)
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
-
     return (
         <>
             <View style={{ position: "relative", flex: 1 }} >
@@ -19,17 +16,16 @@ const SignUp = () => {
                     <Image style={styles.img} source={require("../../assets/img/cart.jpg")}></Image>
                 </LinearGradient>
                 <View style={styles.top}>
-                    <Text style={styles.text}>Nice to meet you!</Text>
-                    <Text style={styles.textSm}>Just pick a username and password so we can begin!</Text>
+                    <Text style={styles.text}>Welcome Back!</Text>
+                    <Text style={styles.textSm}>Just login and enjoy the simplicity!</Text>
                 </View>
                 <View style={styles.center}>
                     <Input onChangeText={setUsername} value={username} style={styles.formInput} placeholder="Username" placeholderTextColor="white" autoCorrect={false} autoCorrect={false} autoCapitalize="none" />
                     <Input onChangeText={setPassword} value={password} style={styles.formInput} placeholder="Password" placeholderTextColor="white" autoCorrect={false} autoCorrect={false} autoCapitalize="none" />
-                    <Input onChangeText={setConfirmPassword} value={confirmPassword} style={styles.formInput} placeholder="Confirm Password" placeholderTextColor="white" autoCorrect={false} autoCorrect={false} autoCapitalize="none" />
                     <Button
-                        onPress={() => register(username, password, confirmPassword)} title="Register" buttonStyle={{ marginTop: 8, backgroundColor: "#FFE11A" }} titleStyle={{ paddingHorizontal: 16, color: "#7f00ff" }}
+                        onPress={() => login(username, password)} title="Login" buttonStyle={{ marginTop: 8, backgroundColor: "#FFE11A" }} titleStyle={{ paddingHorizontal: 16, color: "#7f00ff" }}
                     />
-                    <TouchableOpacity onPress={() => RootNavigation.navigate("SignIn")}><Text style={{ margin: 16, color: "white" }}>Already have an account? Sign in instead.</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => RootNavigation.navigate("SignUp")}><Text style={{ margin: 16, color: "white" }}>Want to create a new account? Click here and join us.</Text></TouchableOpacity>
                 </View>
                 <Overlay
                     isVisible={errorMessage.length > 0}
@@ -58,7 +54,7 @@ const styles = StyleSheet.create({
     img: {
         resizeMode: "cover",
         height: "100%",
-        opacity: 0.2
+        opacity: 0.2,
     },
     top: {
         paddingTop: 32,
@@ -71,7 +67,7 @@ const styles = StyleSheet.create({
         flex: 2,
         alignItems: "center",
         justifyContent: "center",
-        padding: 16
+        padding: 16,
     },
     text: {
         // color: "rgba(0, 0, 0, 0.6)",
@@ -101,4 +97,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default SignUp;
+export default SignIn;
