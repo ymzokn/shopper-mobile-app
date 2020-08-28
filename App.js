@@ -27,7 +27,7 @@ export default function App() {
             <Stack.Screen name="SignIn" component={SignIn} options={{ title: "Sign In" }, { headerShown: false }} />
             <Stack.Screen name="Lists" component={Lists} options={{ title: "Your lists" }} />
             <Stack.Screen name="EmptyListScreen" component={EmptyListScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="CreateListScreen" component={CreateListScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="CreateListScreen" component={CreateListScreen} options={{ title: "New list" }} />
             <Stack.Screen name="ListDetailsScreen" component={ListDetailsScreen} />
           </Stack.Navigator>
         </NavigationContainer>
