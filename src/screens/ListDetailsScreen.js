@@ -10,13 +10,16 @@ import {
 } from "react-native";
 import SafeViewAndroid from "../util/SafeViewAndroid";
 import ItemForm from "./../components/ItemForm";
-import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Context as ListContext } from "../context/ListContext";
 import { AntDesign } from "@expo/vector-icons";
-import Popup from "./../components/Popup";
+// import Popup from "./../components/Popup";
 import shopperApi from "../api/shopper";
+import { Overlay } from "react-native-elements";
+import Modal from "modal-react-native-web";
 
 const ListDetailsScreen = ({ route, navigation }) => {
   // const { list } = route.params;
@@ -35,10 +38,10 @@ const ListDetailsScreen = ({ route, navigation }) => {
     title: list.name,
     headerRight: () => (
       <TouchableOpacity onPress={() => deleteList(list)}>
-        <MaterialIcons
+        <FontAwesome5
           style={styles.listIcon}
-          name="delete-forever"
-          size={32}
+          name="trash-alt"
+          size={24}
           color="black"
         />
       </TouchableOpacity>
@@ -94,7 +97,13 @@ const ListDetailsScreen = ({ route, navigation }) => {
   const renderItem = ({ item }) => (
     <>
       <View style={styles.itemRow}>
-        <Text style={styles.itemName}>{item.name}:</Text>
+        <MaterialIcons
+          style={styles.listIcon}
+          name="label-outline"
+          size={24}
+          color="black"
+        />
+        <Text style={styles.itemName}>{item.name}</Text>
         <Text style={styles.itemQuantity}>{item.quantity}</Text>
         <TouchableOpacity
           style={styles.itemAction}
@@ -138,8 +147,13 @@ const ListDetailsScreen = ({ route, navigation }) => {
                 setOverlayOpen(true);
               }}
             >
-              <AntDesign name="plussquare" size={64} color="#FFE11A" />
-              <Text style={styles.listTitle}>Add Item</Text>
+              <AntDesign
+                style={styles.newListIcon}
+                name="plussquare"
+                size={64}
+                color="#7F00FF"
+              />
+              <Text style={styles.newListText}>New Item</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -154,7 +168,9 @@ const ListDetailsScreen = ({ route, navigation }) => {
           </>
         )}
       </LinearGradient>
-      <Popup
+
+      <Overlay
+        ModalComponent={Modal}
         isVisible={overlayOpen}
         onBackdropPress={() => setOverlayOpen(!overlayOpen)}
       >
@@ -162,7 +178,17 @@ const ListDetailsScreen = ({ route, navigation }) => {
           onSave={selectedItem.name ? handleEdit : handleSave}
           selectedItem={selectedItem}
         />
-      </Popup>
+      </Overlay>
+
+      {/* <Popup
+        isVisible={overlayOpen}
+        onBackdropPress={() => setOverlayOpen(!overlayOpen)}
+      >
+        <ItemForm
+          onSave={selectedItem.name ? handleEdit : handleSave}
+          selectedItem={selectedItem}
+        />
+      </Popup> */}
     </SafeAreaView>
   );
 };
@@ -180,6 +206,10 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
+  },
+  newListText: {
+    color: "#7F00FF",
   },
   listTitle: {
     fontSize: 18,
@@ -187,24 +217,30 @@ const styles = StyleSheet.create({
   },
   listIcon: {
     // borderRadius: "50%",
+    color: "#7f00ff",
     borderWidth: 2,
-    margin: 8,
+    marginHorizontal: 8,
     borderColor: "white",
   },
   itemRow: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 8,
-    marginHorizontal: 16,
-    padding: 8,
+    alignItems: "center",
     backgroundColor: "white",
+    paddingHorizontal: 4,
+    paddingVertical: 16,
+    borderTopWidth: 1,
+    borderTopColor: "lightgray",
   },
   itemName: {
+    flex: 1,
+    letterSpacing: 1,
     fontSize: 18,
     flex: 1,
-    fontWeight: "bold",
   },
   itemQuantity: {
+    flex: 1,
+    letterSpacing: 1,
     fontSize: 18,
     flex: 1,
   },

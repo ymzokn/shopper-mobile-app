@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import {
+  View,
   Text,
   TouchableOpacity,
   FlatList,
@@ -8,10 +9,14 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Context as ListContext } from "../context/ListContext";
+import { Context as AuthContext } from "../context/AuthContext";
 import SafeViewAndroid from "../util/SafeViewAndroid";
 import { LinearGradient } from "expo-linear-gradient";
 import EmptyListScreen from "./EmptyListScreen";
 import shopperApi from "../api/shopper";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const Lists = ({ navigation }) => {
   const {
@@ -19,6 +24,22 @@ const Lists = ({ navigation }) => {
     stopLoading,
     state: { loading },
   } = useContext(ListContext);
+
+  const { logout } = useContext(AuthContext);
+
+  navigation.setOptions({
+    // title: "My Lists",
+    headerRight: () => (
+      <TouchableOpacity onPress={() => logout()}>
+        <MaterialCommunityIcons
+          style={styles.listIcon}
+          name="logout"
+          size={32}
+          color="black"
+        />
+      </TouchableOpacity>
+    ),
+  });
 
   const [lists, setLists] = useState([]);
 
@@ -42,6 +63,12 @@ const Lists = ({ navigation }) => {
       style={styles.listItem}
       onPress={() => navigation.navigate("ListDetailsScreen", { list: item })}
     >
+      <Feather
+        style={styles.listIcon}
+        name="shopping-bag"
+        size={24}
+        color="black"
+      />
       <Text style={styles.listTitle}>{item.name}</Text>
     </TouchableOpacity>
   );
@@ -59,11 +86,28 @@ const Lists = ({ navigation }) => {
               size="large"
             />
           ) : lists.length ? (
-            <FlatList
-              data={lists}
-              renderItem={renderItem}
-              keyExtractor={(list) => list._id}
-            />
+            <>
+              <View style={styles.centered}>
+                <TouchableOpacity
+                  style={{
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  onPress={() => {
+                    navigation.navigate("CreateListScreen");
+                  }}
+                >
+                  <AntDesign name="plussquare" size={64} color="#7f00ff" />
+                  <Text style={styles.newListText}>New List</Text>
+                </TouchableOpacity>
+              </View>
+              <FlatList
+                data={lists}
+                renderItem={renderItem}
+                keyExtractor={(list) => list._id}
+              />
+            </>
           ) : (
             <EmptyListScreen />
           )}
@@ -81,21 +125,34 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
-  list: {
-    // width: "100%",
+  centered: {
+    height: 150,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  newListText: {
+    color: "#7f00ff",
   },
   listItem: {
-    padding: 16,
-    borderColor: "#FFE11A",
-    borderWidth: 2,
-    marginVertical: 4,
+    paddingHorizontal: 4,
+    paddingVertical: 16,
+    backgroundColor: "white",
     display: "flex",
+    borderTopWidth: 1,
+    borderTopColor: "lightgray",
     flexDirection: "row",
     alignItems: "center",
   },
   listTitle: {
-    color: "#FFE11A",
+    letterSpacing: 1,
+    fontSize: 18,
     flex: 1,
+  },
+  listIcon: {
+    color: "#7f00ff",
+    marginHorizontal: 8,
   },
 });
 

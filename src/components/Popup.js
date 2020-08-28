@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const Popup = ({ isVisible, children, onBackdropPress }) => {
   return (
@@ -29,10 +29,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   popupContent: {
-    width: "80%",
+    width: "100%",
     height: "80%",
-    marginLeft: "10%",
-    marginBottom: "10%",
     zIndex: 99,
     elevation: 99,
     backgroundColor: "white",

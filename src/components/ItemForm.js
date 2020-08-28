@@ -18,7 +18,8 @@ const ItemForm = ({ selectedItem, onSave }) => {
         style={styles.formInput}
         placeholder="Name"
         autoCorrect={false}
-        autoCapitalize="none"
+        autoCapitalize="words"
+        autoFocus={true}
       />
       <Input
         onChangeText={setItemQuantity}
@@ -26,7 +27,7 @@ const ItemForm = ({ selectedItem, onSave }) => {
         style={styles.formInput}
         placeholder="Quantity"
         autoCorrect={false}
-        autoCapitalize="none"
+        autoCapitalize="words"
       />
       <Button
         onPress={() => onSave(itemName, itemQuantity)}
