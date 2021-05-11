@@ -33,7 +33,7 @@
     "@babel/core": "^7.8.6",
     "babel-preset-expo": "~8.1.0",
     "logkitty": ">=0.7.1",
-    "lodash": ">=4.17.19"
+    "lodash": ">=4.17.21"
   },
   "private": true
 }
